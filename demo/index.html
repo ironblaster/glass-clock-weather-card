@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Glass Clock Weather Card – demo</title>
+<style>
+  html, body { margin: 0; min-height: 100%; }
+  body {
+    font-family: system-ui, sans-serif; color: #eef4ff; padding: 32px;
+    background:
+      radial-gradient(900px 620px at 0% 0%, rgba(0,170,255,.26), transparent 60%),
+      radial-gradient(820px 600px at 100% 6%, rgba(150,70,255,.26), transparent 60%),
+      radial-gradient(900px 700px at 60% 110%, rgba(0,255,170,.14), transparent 60%), #000;
+  }
+  body.light { color: #1c2433; background: radial-gradient(900px 620px at 0% 0%, rgba(0,170,255,.25), transparent 60%), radial-gradient(820px 600px at 100% 6%, rgba(150,70,255,.18), transparent 60%), #e9eef6; }
+  .wrap { display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start; }
+  .slot { width: var(--w, 860px); }
+  .shot body, body.shot { padding: 24px; }
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap"></div>
+<script>
+/* A tiny stand-in for Home Assistant's <ha-icon>, using the Material Design Icons webfont (demo only).
+   The font has to be declared in the page too: @font-face inside a shadow root is ignored by Chrome. */
+const MDI = 'https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css';
+document.head.insertAdjacentHTML('beforeend', '<link rel="stylesheet" href="' + MDI + '">');
+customElements.define('ha-icon', class extends HTMLElement {
+  static get observedAttributes() { return ['icon']; }
+  constructor() { super(); this.attachShadow({ mode: 'open' }); }
+  connectedCallback() { this._r(); }
+  attributeChangedCallback() { this._r(); }
+  set icon(v) { this.setAttribute('icon', v); }
+  _r() {
+    const name = String(this.getAttribute('icon') || '').replace('mdi:', '');
+    this.shadowRoot.innerHTML = '<link rel="stylesheet" href="' + MDI + '">' +
+      '<style>:host{display:inline-flex;align-items:center;justify-content:center;width:var(--mdc-icon-size,24px);height:var(--mdc-icon-size,24px)}' +
+      'i{font-size:var(--mdc-icon-size,24px);line-height:1}</style><i class="mdi mdi-' + name + '"></i>';
+  }
+});
+customElements.define('ha-card', class extends HTMLElement {});
+
+const Q = new URLSearchParams(location.search);
+const lang = Q.get('lang') || 'en';
+const light = Q.get('theme') === 'light';
+if (light) document.body.classList.add('light');
+if (Q.get('shot')) document.body.classList.add('shot');
+
+/* optional fixed time for screenshots: ?time=10:24 */
+if (Q.get('time')) {
+  const [H, M] = Q.get('time').split(':').map(Number);
+  const RealDate = Date, base = new RealDate(); base.setHours(H, M, 24, 0);
+  const offset = base.getTime() - RealDate.now();
+  window.Date = class extends RealDate {
+    constructor(...a) { if (a.length) super(...a); else super(RealDate.now() + offset); }
+    static now() { return RealDate.now() + offset; }
+  };
+}
+
+const day = (n) => { const d = new Date(); d.setDate(d.getDate() + n); return d; };
+const ymd = (d) => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+const conds = ['partlycloudy', 'sunny', 'rainy', 'cloudy', 'sunny', 'lightning-rainy', 'partlycloudy', 'snowy'];
+const forecast = conds.map((c, i) => ({ datetime: new Date(day(i).setHours(12, 0, 0, 0)).toISOString(), condition: c, temperature: [21, 23, 16, 18, 24, 19, 22, 9][i], templow: [12, 13, 11, 10, 14, 12, 13, 2][i] }));
+
+const hass = {
+  language: lang, locale: { language: lang, time_format: Q.get('h12') ? '12' : 'language' },
+  themes: { darkMode: !light },
+  config: { latitude: 45.46, longitude: 9.19, unit_system: { temperature: '°C' } },
+  localize: () => '',
+  states: {
+    'weather.home': { entity_id: 'weather.home', state: 'partlycloudy', attributes: { temperature: 17.8, humidity: 62, wind_speed: 9, wind_speed_unit: 'km/h', temperature_unit: '°C', supported_features: 1, friendly_name: 'Home' } },
+    'sensor.indoor_temperature': { entity_id: 'sensor.indoor_temperature', state: '21.4', attributes: { unit_of_measurement: '°C', device_class: 'temperature' } },
+    'sun.sun': { entity_id: 'sun.sun', state: 'above_horizon', attributes: {} }
+  },
+  connection: {
+    subscribeMessage: (cb, msg) => { setTimeout(() => cb({ type: msg.forecast_type, forecast }), 60); return Promise.resolve(() => {}); }
+  },
+  callApi: (method, path) => Promise.resolve(lang === 'it'
+    ? [{ summary: 'Raccolta Plastica', start: { date: ymd(day(0)) }, end: { date: ymd(day(1)) } }, { summary: 'Carta e cartone', start: { date: ymd(day(1)) }, end: { date: ymd(day(2)) } }]
+    : [{ summary: 'Plastic collection', start: { date: ymd(day(0)) }, end: { date: ymd(day(1)) } }, { summary: 'Paper', start: { date: ymd(day(1)) }, end: { date: ymd(day(2)) } }])
+};
+
+const types = lang === 'it'
+  ? [{ pattern: 'Plastica', label: 'Plastica', icon: 'mdi:bottle-soda-classic-outline', color: [255, 198, 64] }, { pattern: 'Carta', label: 'Carta', icon: 'mdi:newspaper-variant-outline', color: [96, 165, 250] }]
+  : [{ pattern: 'Plastic', label: 'Plastic', icon: 'mdi:bottle-soda-classic-outline', color: [255, 198, 64] }, { pattern: 'Paper', label: 'Paper', icon: 'mdi:newspaper-variant-outline', color: [96, 165, 250] }];
+
+const base = {
+  type: 'custom:glass-clock-weather-card', weather_source: 'entity', weather_entity: 'weather.home',
+  indoor_temperature_entity: 'sensor.indoor_temperature', calendar_entity: 'calendar.waste', calendar_types: types
+};
+const extra = Q.get('config') ? JSON.parse(Q.get('config')) : {};
+const widths = (Q.get('w') || '860').split(',');
+
+const s = document.createElement('script');
+s.src = '../dist/glass-clock-weather-card.js';
+s.onload = () => {
+  widths.forEach((w) => {
+    const slot = document.createElement('div'); slot.className = 'slot'; slot.style.setProperty('--w', w + 'px');
+    const card = document.createElement('glass-clock-weather-card');
+    card.setConfig(Object.assign({}, base, extra));
+    slot.appendChild(card); document.getElementById('wrap').appendChild(slot);
+    card.hass = hass;
+  });
+};
+document.head.appendChild(s);
+</script>
+</body>
+</html>

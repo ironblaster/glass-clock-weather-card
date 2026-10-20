@@ -1,0 +1,6 @@
+{
+  "name": "Glass Clock Weather Card",
+  "filename": "glass-clock-weather-card.js",
+  "render_readme": true,
+  "homeassistant": "2024.8.0"
+}
