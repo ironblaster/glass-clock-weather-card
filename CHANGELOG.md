@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.2
+
+- The forecast comes back by itself after Home Assistant restarts: the subscription retries when the weather integration is not ready yet and subscribes again after a reconnection.
+
 ## 1.0.1
 
 - README: how to avoid the browser cache when updating a manual installation.

@@ -11,7 +11,7 @@
 
   var CARD = 'glass-clock-weather-card';
   var EDITOR = CARD + '-editor';
-  var VERSION = '1.0.1';
+  var VERSION = '1.0.2';
   var REPO = 'https://github.com/ironblaster/glass-clock-weather-card';
   if (customElements.get(CARD)) return;
 
@@ -254,16 +254,29 @@
       return o.hi == null ? null : { datetime: o.datetime, condition: o.cond || 'cloudy', temperature: o.hi, templow: o.lo };
     }).filter(Boolean);
   }
+  // self-healing subscription: retries on error and subscribes again after a reconnection
+  // (e.g. Home Assistant restarted and the weather integration was not ready yet)
   function subscribeForecast(hass, entity, type, cb) {
     if (!hass || !hass.connection || !hass.connection.subscribeMessage || !entity) return null;
-    try {
-      var p = hass.connection.subscribeMessage(function (ev) { cb((ev && ev.forecast) || []); },
-        { type: 'weather/subscribe_forecast', entity_id: entity, forecast_type: type });
-      if (p && p.catch) p.catch(function (e) { console.warn(CARD + ': forecast subscription failed', e); });
-      return p;
-    } catch (e) { return null; }
+    var conn = hass.connection, h = { p: null, t: null, dead: false };
+    function drop() { var p = h.p; h.p = null; if (p && p.then) p.then(function (u) { try { if (u) u(); } catch (e) { /* ignore */ } }).catch(function () { /* ignore */ }); }
+    function retry(ms) { clearTimeout(h.t); h.t = setTimeout(function () { drop(); sub(); }, ms); }
+    function sub() {
+      if (h.dead) return;
+      try {
+        h.p = conn.subscribeMessage(function (ev) { cb((ev && ev.forecast) || []); },
+          { type: 'weather/subscribe_forecast', entity_id: entity, forecast_type: type }, { resubscribe: false });
+        if (h.p && h.p.catch) h.p.catch(function () { h.p = null; retry(15000); });
+      } catch (e) { retry(15000); }
+    }
+    h.onReady = function () { retry(8000); };
+    if (conn.addEventListener) conn.addEventListener('ready', h.onReady);
+    h.cancel = function () { h.dead = true; clearTimeout(h.t); drop(); if (conn.removeEventListener) conn.removeEventListener('ready', h.onReady); };
+    sub();
+    return h;
   }
   function unsubscribe(p) {
+    if (p && p.cancel) { p.cancel(); return; }
     if (p && p.then) p.then(function (u) { try { if (u) u(); } catch (e) { /* ignore */ } }).catch(function () { /* ignore */ });
   }
 
