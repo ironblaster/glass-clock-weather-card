@@ -1,3 +1,5 @@
+<p align="center"><img src="https://raw.githubusercontent.com/ironblaster/glass-clock-weather-card/main/images/banner.png" alt="Casa Futura"></p>
+
 # Glass Clock Weather Card
 
 [![HACS Custom](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://hacs.xyz/docs/faq/custom_repositories)
@@ -100,6 +102,12 @@ I colori si scrivono come `[r, g, b]`, `"#rrggbb"` oppure `"r, g, b"`. Nei `cale
 
 - **Leggerla da lontano**: alza **Grandezza dei testi** (`text_scale`). L'orologio prende sempre tutto lo spazio libero.
 - **Altezza**: nelle viste masonry e a pannello `min_height` è l'altezza minima e la card cresce se serve. Nella vista a sezioni segue la griglia.
+
+## La famiglia Casa Futura
+
+- [Glass Clock Weather Card](https://github.com/ironblaster/glass-clock-weather-card): un orologio grande con il meteo animato.
+- [Casa Futura Cards](https://github.com/ironblaster/casa-futura-cards): quadrante, campanella degli avvisi e pulsanti con PIN.
+- [Casa Futura Theme](https://github.com/ironblaster/casa-futura-theme): il tema scuro in stile vetro.
 
 ## Licenza
 

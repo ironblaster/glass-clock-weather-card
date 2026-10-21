@@ -1,3 +1,5 @@
+<p align="center"><img src="https://raw.githubusercontent.com/ironblaster/glass-clock-weather-card/main/images/banner.png" alt="Casa Futura"></p>
+
 # Glass Clock Weather Card
 
 [![HACS Custom](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://hacs.xyz/docs/faq/custom_repositories)
@@ -165,6 +167,12 @@ python3 -m http.server 8000
 ```
 
 Then open `http://localhost:8000/demo/index.html`. Useful parameters: `w=860,380` (card widths), `lang=it`, `theme=light`, `time=10:24` (fixed time for screenshots), `config={"weather_source":"met_no"}`.
+
+## The Casa Futura family
+
+- [Glass Clock Weather Card](https://github.com/ironblaster/glass-clock-weather-card): a big clock with animated weather.
+- [Casa Futura Cards](https://github.com/ironblaster/casa-futura-cards): gauge, alerts bell and action buttons with PIN.
+- [Casa Futura Theme](https://github.com/ironblaster/casa-futura-theme): the dark liquid glass theme.
 
 ## License
 
