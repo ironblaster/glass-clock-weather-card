@@ -4,7 +4,7 @@
 
 [![HACS Custom](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://hacs.xyz/docs/faq/custom_repositories)
 [![GitHub release](https://img.shields.io/github/v/release/ironblaster/glass-clock-weather-card)](https://github.com/ironblaster/glass-clock-weather-card/releases)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE) [![Sponsor](https://img.shields.io/badge/Sponsor-%E2%9D%A4-ff69b4)](https://github.com/sponsors/ironblaster)
 
 A big, glanceable clock for Home Assistant dashboards and wall tablets. It shows animated weather icons, the current conditions, the indoor temperature, the next days and today's calendar events (perfect for waste collection), in a liquid glass style.
 
@@ -167,6 +167,10 @@ python3 -m http.server 8000
 ```
 
 Then open `http://localhost:8000/demo/index.html`. Useful parameters: `w=860,380` (card widths), `lang=it`, `theme=light`, `time=10:24` (fixed time for screenshots), `config={"weather_source":"met_no"}`.
+
+## Support
+
+If Casa Futura makes your home a little nicer, you can [sponsor the project on GitHub](https://github.com/sponsors/ironblaster). Thank you!
 
 ## The Casa Futura family
 

@@ -4,7 +4,7 @@
 
 [![HACS Custom](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://hacs.xyz/docs/faq/custom_repositories)
 [![GitHub release](https://img.shields.io/github/v/release/ironblaster/glass-clock-weather-card)](https://github.com/ironblaster/glass-clock-weather-card/releases)
-[![Licenza: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Licenza: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE) [![Sponsor](https://img.shields.io/badge/Sponsor-%E2%9D%A4-ff69b4)](https://github.com/sponsors/ironblaster)
 
 Un orologio grande, da leggere al volo, per le dashboard di Home Assistant e i tablet a muro. Mostra il meteo con icone animate, la temperatura in casa, i prossimi giorni e gli eventi del calendario di oggi (perfetto per la raccolta differenziata), in stile vetro.
 
@@ -102,6 +102,10 @@ I colori si scrivono come `[r, g, b]`, `"#rrggbb"` oppure `"r, g, b"`. Nei `cale
 
 - **Leggerla da lontano**: alza **Grandezza dei testi** (`text_scale`). L'orologio prende sempre tutto lo spazio libero.
 - **Altezza**: nelle viste masonry e a pannello `min_height` è l'altezza minima e la card cresce se serve. Nella vista a sezioni segue la griglia.
+
+## Sostieni il progetto
+
+Se Casa Futura ti piace, puoi [sostenere il progetto su GitHub Sponsors](https://github.com/sponsors/ironblaster). Grazie!
 
 ## La famiglia Casa Futura
 
