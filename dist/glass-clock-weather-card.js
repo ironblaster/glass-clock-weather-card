@@ -11,7 +11,7 @@
 
   var CARD = 'glass-clock-weather-card';
   var EDITOR = CARD + '-editor';
-  var VERSION = '1.0.0';
+  var VERSION = '1.0.1';
   var REPO = 'https://github.com/ironblaster/glass-clock-weather-card';
   if (customElements.get(CARD)) return;
 

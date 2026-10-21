@@ -38,7 +38,7 @@ Si configura tutto dall'editor visuale: fonte del meteo, posto sulla mappa per l
 ### A mano
 
 1. Scarica `glass-clock-weather-card.js` dall'[ultima versione](https://github.com/ironblaster/glass-clock-weather-card/releases) e copialo in `config/www/`.
-2. In **Impostazioni → Plance → ⋮ → Risorse** aggiungi `/local/glass-clock-weather-card.js?v=1.0.0` come **modulo JavaScript**.
+2. In **Impostazioni → Plance → ⋮ → Risorse** aggiungi `/local/glass-clock-weather-card.js?v=1.0.1` come **modulo JavaScript**.
 3. Ricarica il browser.
 
 Home Assistant lascia i file di `/local` a lungo nella cache del browser: quando aggiorni il file a mano, cambia anche il numero dopo `?v=`. Con HACS lo fa da solo.

@@ -42,7 +42,7 @@ Everything can be set from the visual editor: weather source, a place on the map
 ### Manual
 
 1. Download `glass-clock-weather-card.js` from the [latest release](https://github.com/ironblaster/glass-clock-weather-card/releases) and copy it to `config/www/`.
-2. In **Settings → Dashboards → ⋮ → Resources** add `/local/glass-clock-weather-card.js?v=1.0.0` as a **JavaScript module**.
+2. In **Settings → Dashboards → ⋮ → Resources** add `/local/glass-clock-weather-card.js?v=1.0.1` as a **JavaScript module**.
 3. Reload the browser.
 
 Home Assistant lets browsers cache files in `/local` for a long time: when you update the file by hand, change the `?v=` number too. HACS does this for you.

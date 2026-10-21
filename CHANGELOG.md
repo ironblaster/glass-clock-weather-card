@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.1
+
+- README: how to avoid the browser cache when updating a manual installation.
+
 ## 1.0.0
 
 First release.
