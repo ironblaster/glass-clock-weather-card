@@ -112,6 +112,7 @@ Se Casa Futura ti piace, puoi [sostenere il progetto su GitHub Sponsors](https:/
 - [Glass Clock Weather Card](https://github.com/ironblaster/glass-clock-weather-card): un orologio grande con il meteo animato.
 - [Casa Futura Cards](https://github.com/ironblaster/casa-futura-cards): quadrante, campanella degli avvisi e pulsanti con PIN.
 - [Casa Futura Theme](https://github.com/ironblaster/casa-futura-theme): il tema scuro in stile vetro.
+- [Casa Futura Kiosk](https://github.com/ironblaster/casa-futura-kiosk): colore della barra di stato, zoom e ritorno alla home per i tablet a muro.
 
 ## Licenza
 

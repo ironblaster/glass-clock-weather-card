@@ -177,6 +177,7 @@ If Casa Futura makes your home a little nicer, you can [sponsor the project on G
 - [Glass Clock Weather Card](https://github.com/ironblaster/glass-clock-weather-card): a big clock with animated weather.
 - [Casa Futura Cards](https://github.com/ironblaster/casa-futura-cards): gauge, alerts bell and action buttons with PIN.
 - [Casa Futura Theme](https://github.com/ironblaster/casa-futura-theme): the dark liquid glass theme.
+- [Casa Futura Kiosk](https://github.com/ironblaster/casa-futura-kiosk): status bar color, zoom and return home for wall tablets.
 
 ## License
 
